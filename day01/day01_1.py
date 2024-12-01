@@ -8,7 +8,7 @@ def process_line(line):
 
 def main():
     matrix = [[], []]
-    path2file = './input/input_day01example'
+    path2file = './input/input_day01'
     lines = read_fine(path2file)
     lines = [line.strip() for line in lines]
     print("Lines = ", lines)
