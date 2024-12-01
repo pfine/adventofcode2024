@@ -7,7 +7,7 @@ def process_line(line):
     pass
 
 def main():
-    path2file = './input/input_day00'
+    path2file = './input/input_day01example'
     lines = read_fine(path2file)
     lines = [line.strip() for line in lines]
     print("Lines = ", lines)
