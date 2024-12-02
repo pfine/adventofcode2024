@@ -11,12 +11,12 @@ def runPart(day, part, input):
     print(f"Executing part {part}")
 
     match day:
+        case "0":
+            day00.executePartOne(input) if part == 1 else day00.executePartTwo(input)
         case "1":
-            day1.executePartOne(input) if part == 1 else day1.executePartTwo(input)
+            day01.executePartOne(input) if part == 1 else day01.executePartTwo(input)
         case "2":
-            day2.executePartOne(input) if part == 1 else day2.executePartTwo(input)
-
-
+            day02.executePartOne(input) if part == 1 else day02.executePartTwo(input)
 
 def main(argv):
     input = readInput(argv[0])
