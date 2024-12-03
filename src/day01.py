@@ -1,27 +1,21 @@
-def read_fine(path2file):
-    with open(path2file, 'r', encoding="utf8") as file:
-        lines = file.readlines()
-    return lines
 
-def process_line(line):
-    pass
 
-def main():
+
+def part_1(input_data: list[str]) -> None:
+    """Function printing python version."""
     matrix = [[], []]
-    path2file = './input/input_day01_1'
-    lines = read_fine(path2file)
+    lines = input_data
     lines = [line.strip() for line in lines]
     print("Lines = ", lines)
 
     for line in lines:
         print(" > line =", line)
-        # processed_line = process_line(line)
         row = line.split()
         print(" > row =", row)
         matrix[0].append(int(row[0])) # convert to int
         matrix[1].append(int(row[1])) # convert to int
 
-    print("matrix =", matrix)
+    print(f"matrix = {matrix}")
 
     # sort from lowest
     list_1 = matrix[0]
@@ -43,8 +37,29 @@ def main():
         distance = distance + abs(matrix[0][i] - matrix[1][i])
         print('   > summed distance between', matrix[0][i], "and", matrix[1][i], "is", abs(matrix[0][i] - matrix[1][i]))
 
-    print('Summed distance is', distance)
+    print(f"Summed distance is: {distance}")
 
+def part_2(input_data: list[str]) -> None:
+    """Function printing python version."""
+    matrix = [[], []]
+    lines = input_data
+    lines = [line.strip() for line in lines]
+    print("Lines = ", lines)
 
-if __name__ == "__main__":
-    main()
+    for line in lines:
+        print(" > line =", line)
+        row = line.split()
+        print(" > row =", row)
+        matrix[0].append(int(row[0])) # convert to int
+        matrix[1].append(int(row[1])) # convert to int
+
+    print("matrix =", matrix)
+
+    score = 0
+    # mesure distance
+    for i in range(len(matrix[0])):
+        occurres_in_list2_times = matrix[1].count(matrix[0][i])
+        score = score + matrix[0][i] * occurres_in_list2_times
+        # print('   > Similarity score between element ', matrix[0][i], "and", matrix[1], "is", matrix[0][i] * occurres_in_list2_times)
+
+    print(f'Similarity score is: {score}')
