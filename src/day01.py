@@ -1,65 +1,50 @@
 
+"""Module providing a function printing python version."""
 
+def extract_data(input_data: list[str]) -> tuple[list[int], list[int]]:
+    """Function printing python version."""
+    # extract and transform data
+    data1 = []
+    data2 = []
+    for l in input_data:
+        x = l.split()
+        data1.append(int(x[0]))
+        data2.append(int(x[1]))
+
+    return data1, data2
 
 def part_1(input_data: list[str]) -> None:
     """Function printing python version."""
-    matrix = [[], []]
-    lines = input_data
-    lines = [line.strip() for line in lines]
-    print("Lines = ", lines)
+    data1, data2 = extract_data(input_data)
 
-    for line in lines:
-        print(" > line =", line)
-        row = line.split()
-        print(" > row =", row)
-        matrix[0].append(int(row[0])) # convert to int
-        matrix[1].append(int(row[1])) # convert to int
+    # sort both lists asc
+    data1.sort()
+    data2.sort()
 
-    print(f"matrix = {matrix}")
+    # calculate absolute distance and add to sum
+    sum_distance = 0
+    # for i in range(0, len(data1)):
+    #     sum_distance += abs(data1[i] - data2[i])
+    for i, d1 in enumerate(data1):
+        print(f" >>> iter: {i}, d1: {d1}")
+        sum_distance += abs(d1 - data2[i])
 
-    # sort from lowest
-    list_1 = matrix[0]
-    print(" > list_1 =", list_1)
-    list_1.sort() # sort in plase, result None
-    print(" > list_1 =", list_1)
-    # print(" > list_1 =", list_1, type(list_1), list_1.sort(reverse=False), list_1, sorted(list_1))
-    list_2 = matrix[1]
-    print(" > list_2 =", list_2)
-    list_2.sort() # sort in place, result None
-    print(" > list_2 =", list_2)
-    # print(" > list_2 =", list_2, type(list_2), list_2.sort(reverse=False), list_2, sorted(list_2))
-
-    print("matrix =", matrix)
-
-    distance = 0
-    # mesure distance
-    for i in range(len(matrix[0])):
-        distance = distance + abs(matrix[0][i] - matrix[1][i])
-        print('   > summed distance between', matrix[0][i], "and", matrix[1][i], "is", abs(matrix[0][i] - matrix[1][i]))
-
-    print(f"Summed distance is: {distance}")
+    print(f"Solved 1: {sum_distance}")
 
 def part_2(input_data: list[str]) -> None:
     """Function printing python version."""
-    matrix = [[], []]
-    lines = input_data
-    lines = [line.strip() for line in lines]
-    print("Lines = ", lines)
-
-    for line in lines:
-        print(" > line =", line)
-        row = line.split()
-        print(" > row =", row)
-        matrix[0].append(int(row[0])) # convert to int
-        matrix[1].append(int(row[1])) # convert to int
-
-    print("matrix =", matrix)
+    data1, data2 = extract_data(input_data)
 
     score = 0
     # mesure distance
-    for i in range(len(matrix[0])):
-        occurres_in_list2_times = matrix[1].count(matrix[0][i])
-        score = score + matrix[0][i] * occurres_in_list2_times
-        # print('   > Similarity score between element ', matrix[0][i], "and", matrix[1], "is", matrix[0][i] * occurres_in_list2_times)
+    # for i in range(len(data1)):
+    #     occurres_in_list2_times = data2.count(data1[i])
+    #     score = score + data1[i] * occurres_in_list2_times
+    #     print("   > Similarity score between element ", matrix[0][i], "and", matrix[1], "is", matrix[0][i] * occurres_in_list2_times)
+    for i, d1 in enumerate(data1):
+        print(f" >>> iter: {i}, d1: {d1}")
+        occurres_in_list2_times = data2.count(d1)
+        score = score + d1 * occurres_in_list2_times
+        print(f"   > Similarity score between element {d1} and {data2} is {d1 * occurres_in_list2_times}")
 
     print(f'Similarity score is: {score}')
