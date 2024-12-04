@@ -42,4 +42,4 @@ if __name__ == "__main__":
     main(sys.argv[1:])
 
 # Exec:
-# python aoc2024_dynamic.py 01 input_day01_1_example
+# python aoc2024_dynamic.py 02 input_day02_1_example
