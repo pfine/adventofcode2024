@@ -2,27 +2,27 @@ import sys
 from src.day01 import part_1, part_2
 
 def read_input(input_file):
-    with open(f"data/{input_file}", "r+") as dataFile:
+    with open(f"data/{input_file}", "r+", encoding="utf-8") as dataFile:
         print(f"--- Reading inputfile: data/{input_file} --- ")
         print("Reading data from a file")
         return dataFile.readlines()
 
-def runPart(day, part, input):
+def run_part(day, part, input_data):
     print(f"Executing part {part}")
     print(f" >>> day = {day}")
     print(f" >>> part = {part}")
-    print(f" >>> input = {input}")
+    print(f" >>> input_data = {input_data}")
 
-    part_1(input) if part == 1 else part_2(input)
+    part_1(input_data) if part == 1 else part_2(input_data)
 
 
 def main(argv):
     print(f" >>> argv = {argv}")
-    input = read_input(argv[1])
-    print(f" >>> input = {input}")
+    input_data = read_input(argv[1])
+    print(f" >>> input_data = {input_data}")
 
-    runPart(argv[0], 1, input)
-    runPart(argv[0], 2, input)
+    run_part(argv[0], 1, input_data)
+    run_part(argv[0], 2, input_data)
 
 if __name__ == "__main__":
     print(f" >>> sys.argv = {sys.argv}")

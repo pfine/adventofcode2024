@@ -9,7 +9,7 @@ def read_input(input_file: list[str]) -> list[str]:
         print("Reading data from a file")
         return data_file.readlines()
 
-def runPart(day, part, input_data) -> None:
+def run_part(day, part, input_data) -> None:
     """Function printing python version."""
     print(f"Executing part {part}")
     # print(f" >>> day = {day}")
@@ -34,8 +34,8 @@ def main(argv):
     input_data = read_input(argv[1])
     # print(f" >>> input = {input}")
 
-    runPart(argv[0], 1, input_data)
-    runPart(argv[0], 2, input_data)
+    run_part(argv[0], 1, input_data)
+    run_part(argv[0], 2, input_data)
 
 if __name__ == "__main__":
     print(f" >>> sys.argv = {sys.argv}")
