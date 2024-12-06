@@ -24,61 +24,47 @@ def count_distance(row: list[int]) -> list[int]:
 
     return distance
 
-def check_safety(row: list[int]) -> tuple[bool, str]:
+def check_safety(row: list[int]) -> bool:
     """Function for checking safety"""
     distance = count_distance(row)
-    print(f" >>>-check_safety-> distance = {distance}")
+    # print(f" >>>-check_safety-> distance = {distance}")
 
     check_if_in_range = all((abs(x) >= 1 and abs(x) <= 3) for x in distance)
-    print(f" >>>-check_safety-> check_if_in_range = {check_if_in_range}")
+    # print(f" >>>-check_safety-> check_if_in_range = {check_if_in_range}")
     if not check_if_in_range:
         print(" >>>   - Unsafe (chaged too much, or not all)")
-        return (False, "range")
+        return False
 
     check_if_the_same_sign = all(x > 0 for x in distance) or all(x < 0 for x in distance)
-    print(f" >>>-check_safety-> check_if_the_same_sign = {check_if_the_same_sign}")
+    # print(f" >>>-check_safety-> check_if_the_same_sign = {check_if_the_same_sign}")
     if not check_if_the_same_sign:
         print(" >>>   - Unsafe (chaged in sign)")
-        return (False, "sign")
-
-    print(" >>>   - Safe")
-    return (True, "")
-
-def check_safety_extended(row: list[int], fail_safty = False) -> bool:
-    """Function for checking safety extended"""
-    distance = count_distance(row)
-    print(f" >>>-check_safety_extended-> distance = {distance}")
-
-    if check_safety(row)[0]:
-        print(" >>>   - Safe (already w/o any rlemnt removed)")
-        return True
-
-    # 
-
-    check_if_in_range = any((abs(x) < 1 or abs(x) > 3) for x in distance)
-    print(f" >>>-check_safety_extended-> check_if_in_range = {check_if_in_range}")
-    if not check_if_in_range:
-        print(" >>>   - Unsafe (chaged too much, or not all)")
-        if fail_safty:
-            # try with remove 1 element
-            print(" >>>----> fail_safty procedure for RANGE")
-
-        else:
-            return False
-
-    check_if_the_same_sign = all(x > 0 for x in distance) or all(x < 0 for x in distance)
-    print(f" >>>-check_safety_extended-> check_if_the_same_sign = {check_if_the_same_sign}")
-    if not check_if_the_same_sign:
-        print(" >>>   - Unsafe (chaged in sign)")
-        if fail_safty:
-            # try with remove 1 element
-            print(" >>>----> fail_safty procedure for SIGN")
-
-        else:
-            return False
+        return False
 
     print(" >>>   - Safe")
     return True
+
+def check_safety_extended(row: list[int]) -> bool:
+    """Function for checking safety extended"""
+    distance = count_distance(row)
+    # print(f" >>>-check_safety_extended-> distance = {distance}")
+
+    if check_safety(row):
+        print(" >>>   - Safe (w/o any element being removed)")
+        return True
+
+    # not safe w/o removing any elemet, trying to remove one to get safe
+    for i, element in enumerate(row):
+        row_backup = row.copy()
+        # print(f" >>>-check_safety_extended-> i = {i}")
+        # print(f" >>>-check_safety_extended-> element = {element}")
+        row_backup.pop(i)
+        if check_safety(row_backup):
+            print(f" >>>   - Safe (when remove element = {element} with index i = {i})")
+            return True
+
+    print(" >>>   - Unsafe (removing not helps)")
+    return False
 
 
 def part_1(input_data: list[str]) -> None:
@@ -91,7 +77,7 @@ def part_1(input_data: list[str]) -> None:
     # working or rows
     for i, row in enumerate(data):
         print(f"\n iter: {i}, row: {row}")
-        if check_safety(row)[0]:
+        if check_safety(row):
             safe_count += 1
 
     print(f"\nSolved 1: Number of safe reports are: {safe_count}\n")
@@ -107,9 +93,7 @@ def part_2(input_data: list[str]) -> None:
     # working or rows
     for i, row in enumerate(data):
         print(f"\n iter: {i}, row: {row}")
-        if check_safety_extended(row, True):
+        if check_safety_extended(row):
             safe_count += 1
-        else:
-            print(f" - try with remove 1 level")
 
     print(f"\nSolved 2: Number of safe reports are: {safe_count}\n")
