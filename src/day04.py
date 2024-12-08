@@ -14,24 +14,41 @@ def extract_data(input_data: list[str]) -> list[list]:
 
     return data
 
-def path1(data: list[list], i: int, j: int) -> bool: # direction: right -
+def path_right(data: list[list], i: int, j: int) -> bool: # direction: right -
     """Function for extracting data"""
-    word = str([data[i][j], data[i+1][j], data[i+2][j], data[i+3][j]])
-    print(f" >>>-path1-> word = {word}")
+    if len(data[i]) - j > 3:
+        word = [data[i][j], data[i][j+1], data[i][j+2], data[i][j+3]]
+        print(f" >>>-path1-> word = {word} or {"".join(word)}")
+        if "".join(word) in ("XMAS", "SAMX"):
+            return True
+    return False
 
-    return True
-
-def path2(data: list[list], i: int, j: int) -> bool: # direction: down right \
+def path_down_right(data: list[list], i: int, j: int) -> bool: # direction: down right \
     """Function for extracting data"""
-    pass
+    if (len(data[i]) - j > 3) and (len(data) - i > 3):
+        word = [data[i][j], data[i+1][j+1], data[i+2][j+2], data[i+3][j+3]]
+        print(f" >>>-path1-> word = {word} or {"".join(word)}")
+        if "".join(word) in ("XMAS", "SAMX"):
+            return True
+    return False
 
-def path3(data: list[list], i: int, j: int) -> bool: # direction: down |
+def path_down(data: list[list], i: int, j: int) -> bool: # direction: down |
     """Function for extracting data"""
-    pass
+    if len(data) - i > 3:
+        word = [data[i][j], data[i+1][j], data[i+2][j], data[i+3][j]]
+        print(f" >>>-path1-> word = {word} or {"".join(word)}")
+        if "".join(word) in ("XMAS", "SAMX"):
+            return True
+    return False
 
-def path4(data: list[list], i: int, j: int) -> bool: # direction: down back left /
+def path_down_back_left(data: list[list], i: int, j: int) -> bool: # direction: down back left /
     """Function for extracting data"""
-    pass
+    if (j > 3) and (len(data) - i > 3):
+        word = [data[i][j], data[i+1][j-1], data[i+2][j-2], data[i+3][j-3]]
+        print(f" >>>-path1-> word = {word} or {"".join(word)}")
+        if "".join(word) in ("XMAS", "SAMX"):
+            return True
+    return False
 
 def part_1(input_data: list[str]) -> None:
     """Function part 1"""
