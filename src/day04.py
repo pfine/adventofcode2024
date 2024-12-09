@@ -43,12 +43,17 @@ def path_down(data: list[list], i: int, j: int) -> bool: # direction: down |
 
 def path_down_back_left(data: list[list], i: int, j: int) -> bool: # direction: down back left /
     """Function for extracting data"""
-    if (j > 3) and (len(data) - i > 3):
+    if (j > 2) and (len(data) - i > 3):
         word = [data[i][j], data[i+1][j-1], data[i+2][j-2], data[i+3][j-3]]
         print(f" >>>-path1-> word = {word} or {"".join(word)}")
         if "".join(word) in ("XMAS", "SAMX"):
             return True
     return False
+
+def print_matrix(matrix: list[list]) -> str:
+    """Function for extracting data"""
+    for _, row in enumerate(matrix):
+        print("".join(row))
 
 def part_1(input_data: list[str]) -> None:
     """Function part 1"""
@@ -56,13 +61,74 @@ def part_1(input_data: list[str]) -> None:
     data = extract_data(input_data)
     print(f" data = {data}")
 
-    counted_sum = 0
+    print("\ndata:")
+    print_matrix(data)
+
+    # print("\nresult_matrix:")
+    result_matrix = []
+    for i, row in enumerate(data):
+        result_matrix.append(["."] * len(row))
+    # print_matrix(result_matrix)
+
+    counted_true = 0
     # working or rows
     for i, row in enumerate(data):
-        print(f"iter: {i}, row: {row}")
+        print(f"\niter: {i}, row: {row}")
+        # result_matrix.append(["."] * len(row))
+        for j, _ in enumerate(row):
+            print(f" starting from line: {i}, column: {j} element: {row[j]}")
+            # path_right
+            if path_right(data, i, j):
+                print(f"  - right: True <-------------- {counted_true}")
+                result_matrix[i][j] = row[j]
+                # word = [data[i][j], data[i][j+1], data[i][j+2], data[i][j+3]]
+                result_matrix[i][j+1] = data[i][j+1]
+                result_matrix[i][j+2] = data[i][j+2]
+                result_matrix[i][j+3] = data[i][j+3]
+                counted_true += 1
+            # else:
+            #     print("  - right: False")
+            # path_down_right
+            if path_down_right(data, i, j):
+                print(f"  - down_right: True <-------------- {counted_true}")
+                result_matrix[i][j] = row[j]
+                # word = [data[i][j], data[i+1][j+1], data[i+2][j+2], data[i+3][j+3]]
+                result_matrix[i+1][j+1] = data[i+1][j+1]
+                result_matrix[i+2][j+2] = data[i+2][j+2]
+                result_matrix[i+3][j+3] = data[i+3][j+3]
+                counted_true += 1
+            # else:
+            #     print("  - down_right: False")
+            # path_down
+            if path_down(data, i, j):
+                print(f"  - down: True <-------------- {counted_true}")
+                result_matrix[i][j] = row[j]
+                # word = [data[i][j], data[i+1][j], data[i+2][j], data[i+3][j]]
+                result_matrix[i+1][j] = data[i+1][j]
+                result_matrix[i+2][j] = data[i+2][j]
+                result_matrix[i+3][j] = data[i+3][j]
+                counted_true += 1
+            # else:
+            #     print("  - down: False")
+            # path_down_back_left
+            if path_down_back_left(data, i, j):
+                print(f"  - down_back_left: True <-------------- {counted_true}")
+                result_matrix[i][j] = row[j]
+                # word = [data[i][j], data[i+1][j-1], data[i+2][j-2], data[i+3][j-3]]
+                result_matrix[i+1][j-1] = data[i+1][j-1]
+                result_matrix[i+2][j-2] = data[i+2][j-2]
+                result_matrix[i+3][j-3] = data[i+3][j-3]
+                counted_true += 1
+            # else:
+            #     print("  - down_back_left: False")
 
-    print(f"\nSolved 1: XMAS occurs a total of: {counted_sum}\n")
+    print("\ndata:")
+    print_matrix(data)
 
+    print("\nresult_matrix:")
+    print_matrix(result_matrix)
+
+    print(f"\nSolved 1: XMAS occurs a total of: {counted_true}\n")
 
 def part_2(input_data: list[str]) -> None:
     """Function part 2"""
