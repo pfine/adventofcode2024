@@ -50,6 +50,27 @@ def path_down_back_left(data: list[list], i: int, j: int) -> bool: # direction: 
             return True
     return False
 
+def find_mas_or_sam(elem1: str, elem2: str, elem3: str) -> bool: # search for MAS or SAM
+    """Function for extracting data"""
+    print(f" >>>-find_mas_or_sam-> checking for: {"".join([elem1, elem2, elem3])}")
+    if "".join([elem1, elem2, elem3]) in ("MAS", "SAM"):
+        return True
+    return False
+
+def find_x_mas_stamp(data: list[list], i: int, j: int) -> bool: # must be X with MAS or SAM
+    """Function for extracting data"""
+    if (len(data[i]) - j < 3) or (len(data) - i < 3):
+        return False
+    # check \ - [i][j], [i+1][j+1], [i+2][j+2]
+    checking_down_right = find_mas_or_sam(data[i][j], data[i+1][j+1], data[i+2][j+2])
+    # check / - [i+2][j], [i+1][j+1], [i][j+2]
+    checking_up_right = find_mas_or_sam(data[i+2][j], data[i+1][j+1], data[i][j+2])
+    # validation:
+    if checking_down_right and checking_up_right:
+        print(f" >>>-find_x_mas_stamp-> found XMAS stamp: [{i}][{j}]")
+        return True
+    return False
+
 def print_matrix(matrix: list[list]) -> str:
     """Function for extracting data"""
     for _, row in enumerate(matrix):
@@ -136,9 +157,40 @@ def part_2(input_data: list[str]) -> None:
     data = extract_data(input_data)
     print(f" data = {data}")
 
-    counted_sum = 0
+    print("\ndata:")
+    print_matrix(data)
+
+    # print("\nresult_matrix:")
+    result_matrix = []
+    for i, row in enumerate(data):
+        result_matrix.append(["."] * len(row))
+    # print_matrix(result_matrix)
+
+    counted_true = 0
     # working or rows
     for i, row in enumerate(data):
-        print(f"iter: {i}, row: {row}")
+        print(f"\niter: {i}, row: {row}")
+        # result_matrix.append(["."] * len(row))
+        for j, _ in enumerate(row):
+            print(f" starting from line: {i}, column: {j} element: {row[j]}")
+            # find_x_mas_stamp
+            if find_x_mas_stamp(data, i, j):
+                print(f"  - find_x_mas_stamp: True <-------------- {counted_true}")
+                result_matrix[i][j] = row[j]
+                # adding \ - data[i][j], data[i+1][j+1], data[i+2][j+2]
+                result_matrix[i+1][j+1] = data[i+1][j+1]
+                result_matrix[i+2][j+2] = data[i+2][j+2]
+                # adding / - data[i+2][j], data[i+1][j+1], data[i][j+2]
+                result_matrix[i+2][j] = data[i+2][j]
+                result_matrix[i][j+2] = data[i][j+2]
+                counted_true += 1
+            # else:
+            #     print("  - down_back_left: False")
 
-    print(f"\nSolved 2: XMAS occurs a total of: {counted_sum}\n")
+    print("\ndata:")
+    print_matrix(data)
+
+    print("\nresult_matrix:")
+    print_matrix(result_matrix)
+
+    print(f"\nSolved 2: X-MAS occurs a total of: {counted_true}\n")
